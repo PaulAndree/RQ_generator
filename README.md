@@ -12,7 +12,7 @@ and Ollama services. The Ollama server must have `qwen3:14b` installed.
 ```bash
 uv sync --extra dev
 uv run rq-generator /path/to/pdfs
-uv run rq-generator /path/to/pdfs --output /path/to/results
+uv run rq-generator /data --output /results_output
 ```
 
 Alternatively, install with `python3 -m pip install .` and run
