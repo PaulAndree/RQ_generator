@@ -129,6 +129,7 @@ available, and model latency and token counts. Set `LOKI_URL` for best-effort
 delivery to the existing shared Loki. Set `PUSHGATEWAY_URL` to publish completed
 and failed document counts plus cumulative processing duration. Metrics use
 stable job/environment groups and represent the latest run, not all-time totals.
+Each run resets and publishes its counters, including runs with no PDFs.
 Shared Prometheus must already scrape the Pushgateway. Remove stale groups
 through the shared Pushgateway when retiring an environment.
 

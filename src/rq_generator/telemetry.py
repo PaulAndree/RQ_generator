@@ -108,10 +108,18 @@ class Telemetry:
                 except Exception:
                     logger.warning("Langfuse delivery failed")
 
+    def reset(self):
+        self.completed = self.failed = 0
+        self.duration = 0.0
+        self.publish()
+
     def job(self, success, duration):
         self.completed += int(success)
         self.failed += int(not success)
         self.duration += duration
+        self.publish()
+
+    def publish(self):
         endpoint = os.getenv("PUSHGATEWAY_URL")
         if endpoint:
             metrics = (

@@ -62,6 +62,7 @@ def run(directory: Path, output: Path, services) -> int:
 
 
 def process(paths, output, services):
+    services.telemetry.reset()
     chunks, cards, progress = [], [], []
     completed = set()
     checkpoint(output, chunks, cards, progress)
@@ -115,6 +116,7 @@ def process(paths, output, services):
             services.telemetry.job(success, time.monotonic() - started)
         # Storage errors are fatal: continuing would claim progress that was not saved.
         checkpoint(output, chunks, cards, progress)
+    services.telemetry.publish()
     logger.info(
         "run_completed", extra={"fields": {"cards": len(cards), "failures": failures}}
     )

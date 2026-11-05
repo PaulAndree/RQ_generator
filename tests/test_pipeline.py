@@ -105,6 +105,7 @@ def test_folder_pipeline_and_stable_ids(tmp_path):
     assert cards[0]["main_claims"][0]["chunk_id"] == [chunks[0]["chunk_id"]]
     assert run(inputs, output, services) == 0
     assert json.loads((output / "document_cards.json").read_text())["cards"] == cards
+    assert services.telemetry.completed == 2
     assert any(
         b"type_name" in r.content for r in calls if r.url.path == "/services/ocr"
     )
