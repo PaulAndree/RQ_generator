@@ -106,6 +106,13 @@ context window. Truncated responses, oversized intermediate cards, and
 consolidation that cannot shrink within the budget fail that PDF explicitly.
 Increasing the context or output limit may help those documents.
 
+If a model response cites unknown or duplicate chunk IDs, the program retries
+that batch once with the rejected draft, the original evidence, and the allowed
+IDs. The correction schema restricts citations to those IDs, and the response
+must pass the same checks. A second invalid response fails
+the PDF. Corrections that exceed the configured input budget fail without an
+extra model request. Malformed or truncated responses do not trigger this retry.
+
 All outputs pass strict structure and reference checks. Claims and questions
 must reference chunks from the same document, and each card has at most five
 questions. These checks cannot prove that model prose is scientifically true
