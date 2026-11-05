@@ -254,3 +254,43 @@ def test_invalid_model_outputs_fail(response):
     )
     with pytest.raises(ValueError):
         services.generate([{"chunk_id": "real", "text": "Study."}], {"real"})
+
+
+def test_consolidation_retains_evidence_when_chunks_have_no_claims(tmp_path):
+    services, _ = fixture_services(tmp_path)
+    services.config = Config(context_tokens=8192, output_tokens=1024)
+    consolidations = []
+
+    def generate(items, allowed, *, consolidate=False):
+        if consolidate:
+            consolidations.append(allowed)
+            assert allowed == {"c1", "c2"}
+        return Draft.model_validate(
+            {
+                "main_claims": [],
+                "summary": {
+                    "findings": None,
+                    "methods": "A controlled study.",
+                    "conditions": None,
+                    "limitations": None,
+                },
+                "candidate_research_questions": [],
+            }
+        )
+
+    services.generate = generate
+    chunks = [
+        Chunk(
+            doc_id="d",
+            chunk_id=ref,
+            text="Methods " * 800,
+            source_path="a.pdf",
+            section="Methods",
+            index=i,
+            token_count=800,
+            language="en",
+        )
+        for i, ref in enumerate(["c1", "c2"])
+    ]
+    services.card("d", chunks)
+    assert consolidations

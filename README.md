@@ -97,7 +97,8 @@ IDs are assigned in Python from the document, claim position, text, and sorted
 evidence IDs. Changed model wording can change a claim ID.
 
 The model extracts partial cards from bounded chunk batches, then consolidates
-them in bounded rounds. An oversized chunk is split internally without changing
+them in bounded rounds. Intermediate cards retain source chunk IDs even when
+those chunks contain no central claims. An oversized chunk is split internally without changing
 its saved evidence ID. UTF-8 byte counts conservatively bound Qwen input tokens;
 the budget also includes the JSON schema and reserves space for chat overhead
 and output tokens. Set `--context-tokens` within the server/model's supported

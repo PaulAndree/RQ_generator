@@ -236,25 +236,21 @@ class Services:
                 text = text[low:]
 
     def card(self, doc_id, chunks):
+        def partial(batch, allowed, *, consolidate=False):
+            draft = self.generate(batch, allowed, consolidate=consolidate).model_dump()
+            return {**draft, "source_chunk_ids": sorted(allowed)}
+
         drafts = []
         for batch in self.batches(self.fragments(chunks)):
             allowed = {item["chunk_id"] for item in batch}
-            drafts.append(self.generate(batch, allowed).model_dump())
+            drafts.append(partial(batch, allowed))
         while len(drafts) > 1:
             reduced = [
-                self.generate(
+                partial(
                     batch,
-                    {
-                        ref
-                        for item in batch
-                        for evidence in [
-                            *item["main_claims"],
-                            *item["candidate_research_questions"],
-                        ]
-                        for ref in evidence["chunk_id"]
-                    },
+                    {ref for item in batch for ref in item["source_chunk_ids"]},
                     consolidate=True,
-                ).model_dump()
+                )
                 for batch in self.batches(drafts, consolidate=True)
             ]
             if len(reduced) >= len(drafts):
@@ -262,7 +258,13 @@ class Services:
                     "Consolidation cannot reduce within context budget; increase context"
                 )
             drafts = reduced
-        final = Draft.model_validate(drafts[0])
+        final = Draft.model_validate(
+            {
+                key: value
+                for key, value in drafts[0].items()
+                if key != "source_chunk_ids"
+            }
+        )
         claims = [
             IdentifiedClaim(
                 **claim.model_dump(),
