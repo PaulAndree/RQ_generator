@@ -5,7 +5,7 @@
       "id": 2,
       "name": "002-codex-harness-bootstrap",
       "sdd": true,
-      "status": "in_review",
+      "status": "done",
       "acceptance": [
         "Provide a reliable local check entrypoint and validated feature state.",
         "Register supported Codex roles and repeat offline checks in CI.",
@@ -25,7 +25,7 @@
         "code_commit": "624800e66b4a6ebff1224fdb6dc6f10a03a07c1a",
         "report": "progress/review_002-codex-harness-bootstrap.md"
       },
-      "pr_url": null,
+      "pr_url": "https://github.com/PaulAndree/RQ_generator/pull/3",
       "blocked_reason": null,
       "resume_status": null
     }
