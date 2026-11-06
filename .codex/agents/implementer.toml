@@ -1,0 +1,6 @@
+developer_instructions = """
+Act as implementer. Read AGENTS.md and .codex/agents/implementer.md in your checkout.
+Implement only the assigned approved spec in your own branch and worktree.
+Capture the baseline failure, run relevant checks, and provide requirement evidence.
+Return committed work for integration and independent review; do not self-approve.
+"""

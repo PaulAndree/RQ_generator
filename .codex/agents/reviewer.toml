@@ -1,0 +1,8 @@
+sandbox_mode = "read-only"
+developer_instructions = """
+Act as reviewer. Read AGENTS.md and .codex/agents/reviewer.md in your checkout.
+Inspect the assigned fixed candidate commit independently. Do not edit its code.
+Run applicable checks where permissions permit and report APPROVED or
+CHANGES_REQUESTED with exact commit, evidence, findings, and verification limits.
+Return report text to the leader for canonical storage if your checkout is read-only.
+"""

@@ -1,0 +1,18 @@
+[features]
+multi_agent = true
+
+[agents.leader]
+description = "Coordinate one task, human spec approval, independent review, and PR publication."
+config_file = "agents/leader.toml"
+
+[agents.spec_author]
+description = "Draft requirements, design, and tasks for one SDD feature; wait for human approval."
+config_file = "agents/spec_author.toml"
+
+[agents.implementer]
+description = "Implement one approved spec in an isolated worktree and provide test evidence."
+config_file = "agents/implementer.toml"
+
+[agents.reviewer]
+description = "Independently inspect the candidate commit and report findings without editing it."
+config_file = "agents/reviewer.toml"
