@@ -44,3 +44,10 @@ was verified. No monitoring settings or shared metrics were changed.
 
 Seven local Markdown links checked, no missing targets. Archived foreign
 settings and notes-app specs are reference material, not active instructions.
+
+## Preliminary independent review
+
+- Reviewer inspected documentation commit 153a025. Fixed conflict between
+  postpublication task completion and metadata-only commit restrictions.
+- Clarified delegated worktree bases use the leader's supplied commit.
+- Final implementation review remains pending.

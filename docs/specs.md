@@ -49,7 +49,9 @@ can map to a concrete inspection rather than a fabricated unit test.
 Keep requirements scoped and testable. Do not demand retroactive requirement IDs
 for every existing test. The implementer records new requirement evidence in
 `progress/impl_<name>.md`; the reviewer verifies the mapping and any documented
-exceptions. A checked task is progress, not proof.
+exceptions. A checked task is progress, not proof. Tasks that publish the PR or record its
+URL remain pending during prepublication review. The reviewer checks their
+readiness; the leader marks them complete only after those actions happen.
 
 ## Registry contract
 
@@ -85,7 +87,8 @@ restores its recorded state after checking the actual checkout.
 A review record contains `verdict`, `reviewer`, `implementer`, `code_commit`,
 and `report`. `done` requires `APPROVED`, different reviewer/implementer
 identities, an existing report, and `pr_url`. Final metadata commits may follow
-the reviewed code commit. Changes to code, specs, tests, or executable
+the reviewed code commit, including checkbox-only completion of shipping tasks.
+Changes to code, substantive specs, tests, or executable
 configuration require fresh review. An HTTPS PR link in JSON is a record;
 confirm it exists remotely before claiming publication.
 

@@ -10,7 +10,9 @@ than starting unrelated backlog work.
    worktree, feature, and next action against Git before trusting them.
 2. Use `.agents/skills/new-feature/SKILL.md` before edits. Fetch `origin`, inspect
    open PR files and shared checkout status, and isolate from `origin/main`.
-   Preserve an existing worktree only when it belongs to this task.
+   Preserve an existing worktree only when it belongs to this task. Delegated
+   agents start their own worktrees at the leader's supplied base or candidate
+   commit so they receive the approved spec and integrated task changes.
 3. Run `./init.sh`. If it is missing or fails, record the failure. Environment
    repair may address that failure; application implementation waits for a
    passing baseline. During initial workflow migration use the explicit commands
@@ -62,7 +64,9 @@ See `docs/specs.md` for fields and allowed transitions.
   confirmation is required under the user's chosen policy.
 - Complete the registry and history after PR creation. A final metadata-only
   commit may add the PR URL and review report; review its diff and rerun checks.
-  It must not change implementation, specs, executable configuration, or tests.
+  It may also check off a shipping task after publication, without changing
+  its text or scope. It must not change implementation, substantive specs,
+  executable configuration, or tests.
 
 ## Agent isolation
 

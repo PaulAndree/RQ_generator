@@ -37,7 +37,10 @@ review pass, open the PR. Do not merge.
 Use existing authentication and machine permissions. Do not commit credentials
 or weaken the sandbox through project defaults. Confirm project trust through
 the normal Codex workflow. A role's instruction text is not a filesystem or
-network security boundary.
+network security boundary. Before delegating to the read-only reviewer role,
+the leader prepares that reviewer's own checkout and development dependencies.
+The reviewer reports any sandbox restriction that prevents running checks;
+preparing dependencies must not require editing the candidate code.
 
 Current official references, checked 2026-11-06:
 
