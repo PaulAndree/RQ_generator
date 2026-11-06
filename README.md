@@ -6,13 +6,14 @@ ranking are outside its scope.
 
 ## Development workflow
 
-This repository is being organized around a Codex workflow with human-approved
+This repository uses a Codex workflow with human-approved
 specs, persistent memory, independent agent review, and agent-created PRs.
 Start with [the workflow guide](docs/workflow.md), [Codex setup](docs/codex.md),
 and [AGENTS.md](AGENTS.md). [Memory](docs/memory.md) and
 [monitoring](docs/observability.md) explain session recovery and evidence.
-The executable bootstrap is a separate spec that requires approval before
-implementation. The PDF application commands below already work.
+Run `uv sync --extra dev` once, then `./init.sh` for local checks.
+The workflow is guided by versioned instructions and checks; workflow event
+exporters and unattended orchestration remain future work.
 
 ## Install and run
 

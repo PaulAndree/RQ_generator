@@ -4,7 +4,7 @@
 - Started: 2026-11-06.
 - Branch: agent/harness-order-1106.
 - Worktree: /tmp/rq-harness-order-1106.
-- Phase: approved bootstrap implementation and documentation repair.
+- Phase: final independent review.
 
 ## Evidence and decisions
 
@@ -51,3 +51,12 @@ settings and notes-app specs are reference material, not active instructions.
   postpublication task completion and metadata-only commit restrictions.
 - Clarified delegated worktree bases use the leader's supplied commit.
 - Final implementation review remains pending.
+
+## Integrated checks
+
+- Integrated implementer commit 69a8527 as 757800c.
+- ./init.sh passed metadata checks, all 105 tests, and whitespace verification.
+- Application source and its existing tests were not changed.
+- Bootstrap tasks T1-T6 complete. T7 awaits independent approval and PR creation.
+- Native configuration load probes are documented in the implementation report;
+  no fresh model session or live role dispatch was claimed.

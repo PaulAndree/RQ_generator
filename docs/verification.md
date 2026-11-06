@@ -8,16 +8,30 @@ Requires Python 3.12+ and uv. Install the local development environment explicit
 uv sync --extra dev
 ```
 
-The intended entrypoint is `./init.sh`, specified in
-`specs/002-codex-harness-bootstrap/`. Until that executable spec is approved and
-implemented, use the real application checks below and report that bootstrap
-validation is not yet installed:
+Run the repository check entrypoint:
 
 ```bash
-uv run --extra dev python3 -m pytest tests/ -q
-git diff --check
-uv run rq-generator --help
+./init.sh
 ```
+
+It uses the prepared `.venv` without installing packages or downloading Python.
+It checks Python 3.12+, required development imports, workflow metadata, pytest
+collection and execution, and patch whitespace. It also works when invoked by
+absolute path from another directory. Missing tools or dependencies return a
+nonzero exit status with a setup command. Zero collected tests is a failure.
+
+Useful focused commands are:
+
+```bash
+.venv/bin/python scripts/check_harness.py
+.venv/bin/python -m pytest tests/ -q
+git diff --check
+uv run --no-sync --offline rq-generator --help
+```
+
+GitHub Actions prepares Python and dependencies explicitly, then runs the same
+`./init.sh`. A local green run is distinct from a hosted CI result. Required
+branch protection remains a repository-owner setting.
 
 Do not use `unittest discover`: these tests use pytest and a unittest invocation
 can report success without collecting the intended suite. Normal checks must

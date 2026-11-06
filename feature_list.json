@@ -5,7 +5,7 @@
       "id": 2,
       "name": "002-codex-harness-bootstrap",
       "sdd": true,
-      "status": "in_progress",
+      "status": "in_review",
       "acceptance": [
         "Provide a reliable local check entrypoint and validated feature state.",
         "Register supported Codex roles and repeat offline checks in CI.",

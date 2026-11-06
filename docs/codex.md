@@ -12,12 +12,12 @@ archived under `docs/archive/`; do not rely on its enforcement claims.
 
 Native custom roles are declared in `.codex/config.toml` with an
 `agents.<name>` table containing `description` and `config_file`. Each role's
-config file is TOML. The bootstrap spec covers adding and verifying those
-files against the installed CLI. In environments exposing generic delegation
+config file is TOML. The approved bootstrap adds those files with a local configuration-load check
+against the installed CLI. In environments exposing generic delegation
 instead, the leader passes the role contract explicitly. If delegation is
 unavailable, report that limitation; a second self-check is not independent review.
 
-An intended launch after bootstrap is installed is:
+Prepare the environment and launch from your task checkout:
 
 ```bash
 uv sync --extra dev

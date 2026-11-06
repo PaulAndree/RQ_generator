@@ -42,8 +42,8 @@ tests. CI repeats that check on the server. Branch protection can require CI
 and human approval before merge. Neither JSON approval records nor an agent
 verdict authenticate a human identity.
 
-The bootstrap spec defines local checks, CI, and role configuration. It needs
-human approval before implementation. A fully automatic orchestration service
+The approved bootstrap provides local checks, CI, and role configuration.
+A fully automatic orchestration service
 and workflow telemetry exporters are separate features. Role prompts alone do
 not schedule agents or stream events to Grafana.
 
