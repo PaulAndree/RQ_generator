@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "features": [
+    {
+      "id": 2,
+      "name": "002-codex-harness-bootstrap",
+      "sdd": true,
+      "status": "in_progress",
+      "acceptance": [
+        "Provide a reliable local check entrypoint and validated feature state.",
+        "Register supported Codex roles and repeat offline checks in CI.",
+        "Preserve the PDF application and publish only after independent agent review."
+      ],
+      "spec_revision": "a0204f2",
+      "approval": {
+        "approved_by": "repository owner in this Codex conversation",
+        "approved_at": "2026-11-06",
+        "spec_revision": "a0204f2",
+        "source": "Human reply to bootstrap approval request: Approve this bootstrap spec; request_user_input_async call_6fcff1deafc344f291c099a2e15ebbb2"
+      },
+      "review": null,
+      "pr_url": null,
+      "blocked_reason": null,
+      "resume_status": null
+    }
+  ]
+}
