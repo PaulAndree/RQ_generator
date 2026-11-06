@@ -4,6 +4,17 @@ Turn a folder of scientific PDFs into document cards with evidence references.
 This stage processes documents independently. Cross-document discovery and
 ranking are outside its scope.
 
+## Development workflow
+
+This repository uses a Codex workflow with human-approved
+specs, persistent memory, independent agent review, and agent-created PRs.
+Start with [the workflow guide](docs/workflow.md), [Codex setup](docs/codex.md),
+and [AGENTS.md](AGENTS.md). [Memory](docs/memory.md) and
+[monitoring](docs/observability.md) explain session recovery and evidence.
+Run `uv sync --extra dev` once, then `./init.sh` for local checks.
+The workflow is guided by versioned instructions and checks; workflow event
+exporters and unattended orchestration remain future work.
+
 ## Install and run
 
 Requires Python 3.12+ and access to the existing OCR, section-aware chunking,
@@ -12,8 +23,21 @@ and Ollama services. The Ollama server must have `qwen3:14b` installed.
 ```bash
 uv sync --extra dev
 uv run rq-generator /path/to/pdfs
-uv run rq-generator /path/to/pdfs --output /path/to/results
+uv run rq-generator /data --output /results_output
 ```
+
+For a background run with telemetry:
+
+```bash
+nohup uv run --env-file .env --extra telemetry rq-generator ./data \
+  --context-tokens 32768 \
+  --output-tokens 4096 \
+  --output output-retry-2 \
+  > rq-generator.log 2>&1 < /dev/null &
+
+echo $! > rq-generator.pid
+```
+
 
 Alternatively, install with `python3 -m pip install .` and run
 `rq-generator /path/to/pdfs`. `python3 -m rq_generator /path/to/pdfs` also works
