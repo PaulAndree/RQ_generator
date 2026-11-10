@@ -1,0 +1,7 @@
+name = "implementer"
+description = "Implements and verifies one assigned feature against its approved specification, including corrections and authorized delivery."
+developer_instructions = """
+Read .codex/agents/implementer.md and follow its complete protocol.
+Read applicable AGENTS.md instructions and the project documents referenced by
+that protocol. Report missing prerequisites rather than inventing project state.
+"""

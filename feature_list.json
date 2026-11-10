@@ -1,0 +1,25 @@
+{
+  "project": "rq-generator",
+  "description": "Generate evidence-linked scientific document cards from PDF folders.",
+  "rules": {
+    "one_feature_at_a_time": true,
+    "require_tests_to_close": true,
+    "require_approved_spec_to_implement": true,
+    "valid_status": ["pending", "spec_ready", "in_progress", "done", "blocked"],
+    "sdd_required_when": "feature has \"sdd\": true"
+  },
+  "features": [
+    {
+      "id": 1,
+      "name": "initialize-application",
+      "title": "Initialize the application",
+      "description": "Set up the application with the necessary dependencies and configuration.",
+      "acceptance": ["Discover all PDFs in the supplied directory and process them in order.",
+                    "Use an llm service, Ollama Qwen3:14b model to extract the central claims for each chunk if exists and generate one compact card per document.",
+                    "Generate a single JSON file containing all the cards.",
+                    "Grafana dashboard to visualize the cards and logs.",
+                    "langfuse integration to capture traces and logs from ollama qwen3:14b"],
+      "status": "pending"
+    }
+  ]
+}

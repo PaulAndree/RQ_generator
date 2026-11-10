@@ -1,185 +1,147 @@
 # Agent workflow
 
-Choose the applicable parts of this workflow for the requested task. It governs
-this repo and can be copied into other repos with their checks and conventions.
+This file defines the repository workflow. Apply the sections relevant to
+the user's request.
 
-- Read-only reviews, explanations, and investigations need no worktree, commit,
-  PR, or Greptile run. If an investigation leads to edits, isolate those edits.
-- Code changes use isolation, relevant architecture guidance, checks, and
-  evidence of the behavior changed. Capture a failure before fixing it.
-- Small documentation edits use an isolated branch and relevant content or link
-  checks. Do not manufacture runtime evidence or require a bot review for them.
-- Ship when the task calls for a PR or a completed repository change. A request
-  for a plan, review, or local experiment does not imply publishing it.
+## 1. Scope and working principles
 
-## Workflow
+- Make the smallest change that fully solves the requested problem through
+  its normal entry point. Preserve unrelated behavior.
+- Handle one feature at a time.
+- Read-only reviews and investigations do not require a worktree or changes
+  to progress files.
+- Documentation and configuration maintenance use an isolated task branch
+  and relevant checks. They do not automatically require the feature workflow.
+- Open a pull request when the authorized task includes shipping changes.
+  A review, proposal, or local experiment does not imply publication.
+- Write project documentation, specifications, reports, and agent
+  instructions in English.
 
-1. **Isolate.** Use `/new-feature` before repository edits. Start from
-   `origin/main`, or preserve a worktree already assigned to this task.
-   Never build on `main`.
-2. **Build.** Use `/code-structure` when extracting shared operations or
-   choosing boundaries. Follow the project's existing architecture; the
-   service layer pattern is a default for projects without a convention.
-3. **Prove.** Run relevant checks. Use `/evidence-driven-testing` for changed
-   runtime behavior: record the failure before fixing it and the success
-   afterward. For documentation, inspect the changed instructions and verify
-   runnable examples and links as applicable.
-4. **Ship.** Open the PR with evidence appropriate to the change. Use
-   `/before-and-after` when screenshots help; use output pairs for CLI changes.
-   Run `/greploop` for code or executable workflow changes, or when requested.
-   Aim for **5/5 with zero unresolved actionable Greptile findings** on the
-   current commit. Stop at the configured iteration cap, a review timeout, or
-   an unavailable integration and report the actual score and remaining work.
-   Do not claim success or raise the cap automatically. Present the PR URL.
+## 2. Repository map
 
-Ship-beat notes:
+| Path | Purpose | When to read |
+|---|---|---|
+| `feature_list.json` | Feature definitions and workflow status | Before feature work |
+| `progress/current.md` | Active work, evidence, blockers, and next action | At session start |
+| `progress/history.md` | Append-only record of completed work | When historical context is needed |
+| `specs/<name>/` | Requirements, design, and implementation tasks | Before implementing an SDD feature |
+| `docs/architecture.md` | Application scope and architectural requirements | Before specification or implementation |
+| `docs/conventions.md` | Coding, configuration, and service conventions | Before writing code |
+| `docs/specs.md` | Specification format and approval process | Before specification work |
+| `docs/verification.md` | Required checks and evidence | Before implementation and review |
+| `.codex/agents/` | Agent definitions and role protocols | Before delegating work |
+| `src/` | Application code | During implementation and review |
+| `tests/` | Automated tests | During implementation and verification |
 
-- `/before-and-after` drives the `@vercel/before-and-after` CLI. `--markdown`
-  uploads the pair and prints a PR-ready table; it also accepts existing
-  PNGs, so evidence gathered while developing can be reused as-is.
-- In containers/VMs where Chrome fails with "No usable sandbox", set
-  `AGENT_BROWSER_ARGS="--no-sandbox"` for the capture command.
-- The default upload host (0x0.st) is public — fine for ordinary UI shots;
-  pass `--upload-url` for anything sensitive.
+## 3. Feature workflow
 
-## Writing for humans
+For features with `"sdd": true`:
 
-Run `/unslop` over anything a person will read, before you commit, post, or
-send it: commit messages, the PR title and body, README and doc edits, code
-comments, and the closing reply. It strips AI tells (em dashes, filler,
-hedging, chatbot phrases, puffery, bold-label lists) and replaces fancy
-words with plain ones and passive voice with active. Apply it to text you
-wrote or changed, not to prose you didn't touch.
+pending → spec_author → spec_ready → human approval →
+in_progress → implementer → reviewer → PR → done
 
-## Multi-agent rules
+1. Read the active progress record, feature list, and applicable documents.
+2. Validate the selected feature's required fields and status. Report invalid
+   or missing prerequisites rather than inventing project state.
+3. Before any repository edits, use `/new-feature` to establish isolation.
+   Preserve a worktree already assigned to this task. Never build on `main`.
+4. The leader passes the feature ID, absolute worktree path, and branch to
+   every agent. All agents use that same task worktree.
+5. The spec_author creates `specs/<name>/requirements.md`, `design.md`, and
+   `tasks.md`, then changes the feature status to `spec_ready`.
+6. Stop for explicit human approval. Record which specification revision
+   was approved. Substantive specification changes require renewed approval.
+7. After approval, the leader changes the status to `in_progress` and
+   delegates implementation.
+8. The implementer completes the approved tasks, updates their checkboxes,
+   and records verification evidence and requirement-to-test mappings.
+9. The reviewer inspects the changes, executes applicable checks, and
+   verifies acceptance criteria, requirements, tasks, and test assertions.
+10. If changes are requested, the implementer addresses them and the reviewer
+    reviews the updated revision.
+11. After approval, open the pull request when shipping is authorized.
+12. Mark the feature `done` only after the required checks, review, and
+    authorized delivery are complete. Record the pull request URL when applicable.
+
+Features without SDD follow an explicitly defined non-SDD workflow.
+Do not send them to the spec author or assume an approved specification exists.
+
+## 4. Evidence and review
+
+- For bug fixes, reproduce the failure before changing the implementation.
+- For new behavior, add a meaningful failing test before implementing it
+  when an automated test is appropriate.
+- Use checks appropriate to the change. Documentation-only changes require
+  relevant content and reference checks.
+- Record verification commands, exit codes, and test counts.
+- Zero collected tests do not demonstrate runtime correctness.
+- Preserve traceability from acceptance criteria to requirements, tasks,
+  and tests.
+- Check what test assertions establish. Test names and completed task
+  checkboxes alone are insufficient evidence.
+- Identify the revision reviewed. Code changes after approval require
+  another review.
+- Report unavailable integrations and unverified behavior explicitly.
+
+## 5. Progress and session closure
+
+During active work, keep `progress/current.md` updated with:
+
+- Feature ID and current phase.
+- Task worktree and branch.
+- Approved specification revision, when applicable.
+- Completed work and verification evidence.
+- Latest implementation and review report paths.
+- Blockers and the next action.
+
+When work is complete:
+
+1. Append a completion summary to `progress/history.md`.
+2. Reset `progress/current.md` to its template.
+3. Remove temporary files and debugging artifacts created for the task.
+4. Report the outcome, verification results, and delivery location.
+
+When work is paused, blocked, or awaiting approval, preserve enough active
+state to resume. Do not clear the progress record or mark the feature done.
+
+Never remove or overwrite unrelated user changes to make the checkout clean.
+
+## 6. Blockers and recovery
+
+- Read the relevant project documents before making assumptions.
+- Distinguish a routine, recoverable tool failure from a genuine blocker.
+- Retry or use an equivalent supported method when this remains within the
+  authorized scope.
+- Stop when progress requires missing authorization, unresolved requirements,
+  or changes outside the task's scope.
+- Record the blocking reason and the next action needed to resume.
+- Resume from recorded task state rather than starting a second feature.
+
+## 7. Git and shared resources
 
 - Never commit directly to `main`.
-- One worktree and one branch per task and per agent — never reuse or modify
-  another agent's worktree, branch, or uncommitted work.
-- **Scope check** before starting: skim open PRs' changed files
-  (`gh pr list`, `gh pr diff <n> --name-only`) and look for uncommitted work
-  in shared checkouts. Inspect overlapping diffs: independent edits to the same
-  file may proceed in your own worktree. Ask only when changes conflict in
-  behavior, depend on unfinished work, or ownership is unclear. Do not modify
-  another task's checkout.
-- Never force-push to `main` — and never plain `--force` anywhere; only
-  `--force-with-lease`, only on your own task branch.
-- Resolve lockfile conflicts by regenerating, never by hand-merging.
-- Worktrees don't isolate shared resources: confirm a dev-server port
-  answers *your* process before trusting it, and don't run schema
-  experiments against a shared database.
-- If a conflict can't be resolved confidently, stop and report instead of
-  guessing.
+- Before edits, inspect existing worktrees, uncommitted changes, and overlapping
+  open pull requests as described in `/new-feature`.
+- Never force-push to `main`. On the task branch, use `--force-with-lease`
+  only when rewriting published history is necessary and authorized.
+- Regenerate conflicting lockfiles instead of merging them by hand.
+- Worktrees do not isolate ports, services, databases, or monitoring systems.
+  Confirm the target before using shared resources.
+- Stop and report conflicts that cannot be resolved confidently.
+- Do not merge a pull request unless explicitly instructed.
 
-## Logging and observability
+## 8. Writing and available skills
 
-When creating an application or changing runtime behavior, include
-observability appropriate to its complexity use /observability. Follow existing project
-conventions and use the observability skill when available.
+Use `/unslop` on human-facing text written or changed for the task before
+committing, publishing, or sending it.
 
-### Shared infrastructure
+Repository skills:
 
-- Reuse our shared Grafana instance: http://127.0.0.1:3013/.
-- Use our existing metrics backend: Prometheus:	127.0.0.1:9094
-- Use our existing logs backend: Loki 127.0.0.1:3101.
-- Use the shared Pushgateway for metrics from short-lived batch jobs, Pushgateway: 	127.0.0.1:9095
-
-- Do not deploy separate monitoring stacks for each application.
-- Keep endpoints and port mappings in deployment configuration.
-- Read credentials from environment variables or the existing secret manager.
-
-### Application instrumentation
-
-- Emit structured logs using the project's logging framework.
-- Include service name, environment, severity, and request or trace
-  identifiers where applicable.
-- For APIs, measure request counts, errors, and latency.
-- For background jobs, measure executions, failures, and duration.
-- Never log credentials or tokens. Follow project privacy rules for
-  user content.
-
-### Dashboards
-
-- Create or update dashboards in the shared Grafana instance.
-- Identify telemetry by application and environment.
-- Keep dashboard definitions and provisioning configuration in version
-  control where supported.
-
-### LLM applications
-
-- Use Langfuse for LLM tracing.
-- Configure its endpoint and credentials through environment variables.
-- Trace model calls and relevant retrieval or tool steps.
-- Capture model name, latency, token usage, and cost when available.
-- Make prompt and response capture configurable and follow project
-  privacy rules.
-
-### Verification
-
-- Generate a representative request or job execution.
-- Verify that the expected logs, metrics, and applicable LLM traces arrive.
-- Report what was verified and any unavailable integrations.
-- Configure telemetry failures so they do not fail user requests unless
-  the project explicitly requires otherwise.
-
-## Completing a task that ships
-
-1. Keep changes limited to the assigned task.
-2. Run the applicable checks listed below.
-3. Assemble applicable evidence into before/after pairs or content-check results.
-4. Commit with a clear message, rebase onto the latest `origin/main`, and
-   rerun the checks.
-5. Push (`git push -u origin <branch>`; after rebasing an already-pushed
-   branch, `--force-with-lease`).
-6. Open the PR. The body must explain what changed, how it was tested (every
-   claim backed by evidence), before/after proof, and any risks or follow-up
-   work. Run the title and body through `/unslop` before posting.
-7. Run `/greploop` when applicable, with the success and stopping conditions
-   above. `/greploop-apps` selects the alternate trigger in that same workflow.
-8. End by presenting the PR URL.
-
-Do not merge the PR unless explicitly instructed. Keep the worktree until
-the PR is merged or closed.
-
-
-## AI and document-processing services
-
-- Use the existing Ollama service for local LLM inference.
-- Use the existing OCR and embedding services when required.
-- Reuse the project's existing clients and integration patterns.
-- Read endpoints and model names from configuration:
-  - OLLAMA_BASE_URL=http://localhost:11436
-  - CHUNKING_URL=http://localhost:8085
-  - OLLAMA_MODEL=qwen3:14b
-  - OCR_BASE_URL=http://127.0.0.1:8084
-  - EMBEDDING_MODEL=http://127.0.0.1:8089/embed
-  
-- Verify connectivity before running integration checks.
-- Report unavailable services; do not silently substitute another provider.
-- Preserve compatibility between embedding models and existing indexes.
-  Changing the embedding model may require reindexing.
-
-## Checks in this repo
-
-- `python3 -m pytest tests/ -q` runs the recorder and workflow regression tests.
-  Requires Python 3.10+, pytest, ffmpeg and ffprobe with libx264 and the ass filter.
-- `git diff --check` checks whitespace in the change.
-- For changes to headless capture, run the documented Playwright example in an
-  isolated directory and verify its output. Node, npm, and Chromium are needed.
-- Validate edited skill frontmatter and local references. The installed
-  skill-creator validator does not recognize the existing `compatibility` field;
-  report that validator limitation instead of removing useful metadata.
-
-Tests use synthetic recorder input and local API fixtures. They do not prove
-native desktop capture on every OS, live uploads, or a live Greptile review.
-Keep generated evidence under the ignored `.artifacts/` directory.
-
-## Skill sources
-
-| Skill | Source |
+| Skill | Location |
 |---|---|
-| `new-feature`, `code-structure`, `evidence-driven-testing` | this repo |
-| `before-and-after` | this repo, vendored from [vercel-labs/before-and-after](https://github.com/vercel-labs/before-and-after) (or `npx skills add vercel-labs/before-and-after`) |
-| `greploop` | this repo, vendored from [greptileai/skills](https://github.com/greptileai/skills) |
-| `greploop-apps` | this repo, compatibility entrypoint requiring `greploop` |
-| `unslop` | this repo, vendored from [cursor/plugins (pstack)](https://github.com/cursor/plugins/tree/main/pstack/skills/unslop); frontmatter edited so agents apply it unprompted (`disable-model-invocation` dropped, description scoped to text the agent writes or edits for people), body untouched |
+| `new-feature` | `.agents/skills/new-feature/SKILL.md` |
+| `observability-shared-monitoring` | `.agents/skills/observability/SKILL.md` |
+| `unslop` | `.agents/skills/unslop/SKILL.md` |
+
+Read a skill before applying it. Report missing required skills rather than
+assuming they are installed.

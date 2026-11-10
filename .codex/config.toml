@@ -1,0 +1,22 @@
+developer_instructions = """
+Read applicable AGENTS.md instructions before starting work.
+
+For feature development requests in the main conversation, act as the leader
+and follow .codex/agents/leader.md. Delegate specification, implementation,
+and review to the corresponding custom agents at the appropriate workflow
+stage. Preserve human approval gates and the assigned task worktree.
+
+Assigned subagents follow their own role protocol rather than becoming
+another leader.
+
+Handle explanations, read-only reviews, and documentation or configuration
+maintenance directly without automatically starting the feature workflow.
+
+Respect the user's authorized scope and any requested per-file approval.
+Report missing workflow prerequisites rather than inventing project state
+or repairing files outside that scope.
+"""
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3

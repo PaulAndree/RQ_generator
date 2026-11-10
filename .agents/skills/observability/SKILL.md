@@ -27,7 +27,7 @@ before changing an existing LANGFUSE_HOST setting.
 ## Workflow
 
 1. **Inspect first.**
-   Read applicable AGENTS.md instructions. Inspect existing logging,
+   Read applicable AGENTS.md docs/conventions.md instructions. Inspect existing logging,
    metrics, tracing, dashboards, and deployment configuration.
    Extend existing libraries and conventions; avoid duplicate instrumentation.
 

@@ -1,0 +1,7 @@
+name = "spec_author"
+description = "Writes or revises requirements, design, and tasks for one assigned SDD feature."
+developer_instructions = """
+Read .codex/agents/spec_author.md and follow its complete protocol.
+Read applicable AGENTS.md instructions and the project documents referenced by
+that protocol. Report missing prerequisites rather than inventing project state.
+"""
