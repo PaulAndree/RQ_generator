@@ -32,7 +32,7 @@ multibatch extraction/consolidation/compression path, model settings and telemet
 are unchanged. The final A run exercises the changed single-segment path. A repeated
 real model failure exercises usage recording. The final full suite passes.
 
-Specification revision 1 approval is in progress/current.md. Requirements SHA-256
+Specification revision 1 approval is preserved in progress/history.md. Requirements SHA-256
 8307e3049c00bd8d08d52c18ecb763f2844140a7bc8cbb8debb7d72869ac0068;
 design f6e6da7fb0008170597853127e4af0165d102360a9e5e7b552c2777ca76f5e9b;
 tasks before completion checkbox updates
