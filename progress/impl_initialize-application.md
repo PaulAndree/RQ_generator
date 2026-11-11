@@ -1,10 +1,10 @@
 # Implementation report
 
-Feature 1, initialize-application. delivered.
+Feature 1, initialize-application. done.
 Worktree /tmp/rq-initialize-application-1110a, branch agent/initialize-application-1110a.
 Base 6b9de636dfb838a9d1543dcbf8baa20c2761428b. Implementation commit e4e97c1cb27c1e71125bdb513bf27bfd27b0cdb4.
 The user authorized delivery and PR publication on 2026-11-11. No merge is authorized.
-Feature stays in_progress pending leader-authorized finalization.
+Feature status is done after required checks, review, authorized delivery and leader-confirmed finalization.
 
 ## Outcome and revision
 
@@ -315,8 +315,7 @@ F2 is corrected by updating current publication authorization, verification coun
 A acceptance evidence, and all stale T15/T16 statements. Historical failures are
 identified explicitly. No runtime or test changes followed final live inference;
 only progress/evidence updates followed the successful run. Current content digest
-above identifies the final reviewed source/test candidate. Independent review is
-still required before commit and PR publication.
+above identifies the final reviewed source/test candidate. Renewed independent review subsequently approved this content; delivery details follow.
 
 
 ## Authorized delivery
@@ -324,8 +323,7 @@ still required before commit and PR publication.
 Renewed independent review approved content
 678c5c1a9fc128a887df65c03e304090a02b21b861e8188938dd7b48864ac072.
 Leader authorized commit, push and PR creation on 2026-11-11. Required verification
-and review are complete. No code changed after approval. Delivery is in progress;
-feature finalization will follow leader confirmation of the published PR.
+and review are complete. No code changed after approval. Delivery is complete; the published PR and implementation revision are recorded below.
 
 
 Delivery completed on 2026-11-11T07:14:25+01:00.
@@ -336,5 +334,17 @@ Verified the open PR includes exactly the 32 intended files. Approved implementa
 manifest matches all source/test/configuration bytes. Staged scope and credential
 checks passed; .env, caches and ignored evidence artifacts were excluded. No merge
 was performed. Administrative delivery records follow in a separate commit; the
-implementation revision above identifies the reviewed runtime. Leader confirmation
-is required before feature finalization.
+implementation revision above identifies the reviewed runtime. The leader subsequently verified delivery and explicitly authorized finalization.
+
+
+## Completion
+
+Completed at 2026-11-11T07:15:35+01:00. The leader independently verified published PR #4,
+its target branch, included files and reviewed implementation, then authorized
+finalization. Feature 1 is marked done, completion and specification approval
+evidence are in progress/history.md, and progress/current.md is reset to its
+original template. Administrative finalization is published to the same PR.
+Runtime content remains unchanged from the approved digest. Credentials, user
+data and local verification evidence are preserved. The temporary PR body file
+was removed. The task worktree remains available until the PR is merged or closed.
+No merge was performed.
