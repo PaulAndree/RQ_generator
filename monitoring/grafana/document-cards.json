@@ -1,0 +1,210 @@
+{
+  "uid": "rq-generator-document-cards",
+  "title": "Scientific document cards",
+  "schemaVersion": 39,
+  "version": 1,
+  "tags": [
+    "rq-generator"
+  ],
+  "timezone": "browser",
+  "refresh": "10s",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "loki",
+        "type": "datasource",
+        "query": "loki",
+        "label": "Loki"
+      },
+      {
+        "name": "prometheus",
+        "type": "datasource",
+        "query": "prometheus",
+        "label": "Prometheus"
+      },
+      {
+        "name": "environment",
+        "type": "query",
+        "datasource": {
+          "type": "loki",
+          "uid": "${loki}"
+        },
+        "query": "label_values({service=\"rq-generator\"}, environment)",
+        "refresh": 1,
+        "current": {
+          "text": "local",
+          "value": "local"
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Document cards",
+      "type": "table",
+      "datasource": {
+        "type": "loki",
+        "uid": "${loki}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{service=\"rq-generator\",environment=\"$environment\"} | json | operation=\"card_completed\"",
+          "queryType": "range"
+        }
+      ],
+      "options": {},
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "source": "Line",
+            "format": "json",
+            "replace": true
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "timestamp",
+                "doc_id",
+                "status",
+                "claim_count",
+                "entity_count",
+                "question_count"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Application logs",
+      "type": "logs",
+      "datasource": {
+        "type": "loki",
+        "uid": "${loki}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{service=\"rq-generator\",environment=\"$environment\"}",
+          "queryType": "range"
+        }
+      ],
+      "options": {}
+    },
+    {
+      "id": 3,
+      "title": "Latest batch successes and failures",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prometheus}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{__name__=~\"rq_generator_document_(successes|failures)\",environment=\"$environment\"}",
+          "queryType": "range"
+        }
+      ],
+      "options": {}
+    },
+    {
+      "id": 4,
+      "title": "Latest batch duration in seconds",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prometheus}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 24,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "rq_generator_duration_seconds{environment=\"$environment\"}",
+          "queryType": "range"
+        }
+      ],
+      "options": {}
+    },
+    {
+      "id": 5,
+      "title": "Model calls and tokens in latest batch",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prometheus}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 32,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{__name__=~\"rq_generator_model_(calls|input_tokens|output_tokens)\",environment=\"$environment\"}",
+          "queryType": "range"
+        }
+      ],
+      "options": {}
+    },
+    {
+      "id": 6,
+      "title": "Opt-in full card content",
+      "type": "logs",
+      "datasource": {
+        "type": "loki",
+        "uid": "${loki}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 40,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{service=\"rq-generator\",environment=\"$environment\"} | json | operation=\"card_content\"",
+          "queryType": "range"
+        }
+      ],
+      "options": {}
+    }
+  ]
+}
