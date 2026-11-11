@@ -20,7 +20,7 @@
                     "Generate a single JSON file containing all the cards.",
                     "Grafana dashboard to visualize the cards and logs.",
                     "langfuse integration to capture traces and logs from ollama qwen3:14b"],
-      "status": "pending"
+      "status": "done"
     }
   ]
 }
