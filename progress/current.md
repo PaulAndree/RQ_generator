@@ -17,7 +17,7 @@ Do not record credentials or secrets.
 - Execution phase: delivery
 - Started at: 2026-11-10T16:34:15+01:00
 - Last updated at: 2026-11-11T07:10:25+01:00
-- Responsible agent: implementer
+- Responsible agent: leader
 
 Execution phases: specification, awaiting approval, implementation,
 review, corrections, delivery, or finalization.
@@ -94,8 +94,8 @@ Do not treat missing evidence as a successful check.
 ## Delivery
 
 - Authorized delivery scope: User explicitly authorized delivery and opening a pull request on 2026-11-11. Do not merge.
-- Pull request URL: None
-- Delivered revision: None
+- Pull request URL: https://github.com/PaulAndree/RQ_generator/pull/4
+- Delivered revision: e4e97c1cb27c1e71125bdb513bf27bfd27b0cdb4
 
 ## Blockers and recovery
 
@@ -109,8 +109,10 @@ Preserve completed work and existing approval evidence.
 
 ## Next action
 
-- Action: Commit reviewed files, push task branch and open pull request to main
+- Action: Leader verifies published PR delivery, then authorizes finalization
 - Responsible role: leader
 - Required user input or external dependency: None; delivery and pull request publication are authorized
 
 - Implementation handoff: ready_for_review. All T1–T17 evidence is complete. Feature remains in_progress during authorized delivery; leader controls finalization.
+
+- Delivery handoff: https://github.com/PaulAndree/RQ_generator/pull/4 is open against main at implementation revision e4e97c1cb27c1e71125bdb513bf27bfd27b0cdb4. No merge performed. Await leader confirmation before finalization.
